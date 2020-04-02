@@ -1,25 +1,20 @@
-This is the Java version of the customers and orders example that I've used in numerous presentations
-on developing microservices with event sourcing and CQRS.
-The code is built using the Eventuate platform.
-It illustrates how to implement an eventually consistent credit limit check using event sourcing.
-For more information, see this [presentation from Gluecon 2016](http://www.slideshare.net/chris.e.richardson/a-pattern-language-for-microservices-gluecon-2016/24)
+# Requirement
+*Java 8.* If you are using Linux running environment and you have multiple Java versions installed, please use 
+```
+sudo update-alternatives --config java
+sudo update-alternatives --config javac
+```
+to select Java 8 among multiple available Java versions.
 
-# About Eventuate&trade;
+# Notice
+Sometimes failures would occur in the building process. Please use 
+```
+docker stop $(docker ps -a -q)
+docker rm $(docker ps -a -q)
+```
+to stop all running containers and remove them.
 
-![](http://eventuate.io/i/logo.gif)
-
-The application is built using [Eventuate](http://eventuate.io/), which is an application platform for writing transactional microservices.
-It provides a simple yet powerful event-driven programming model that is based on event sourcing and Command Query Responsibility Segregation (CQRS).
-Eventuate solves the distributed data management problems inherent in a microservice architecture.
-It consists of a scalable, distributed event store and client libraries for various languages and frameworks including Java, Scala, and the Spring framework.
-
-# Building and running the application.
-
-This is a Java 8, Gradle project. However, you do not need to install Gradle since it will be downloaded automatically. You just need to have Java 8 installed.
-
-
-## Building and running using Eventuate Local
-
+# Building and running using Eventuate Local
 First, build the application:
 
 ```
@@ -56,12 +51,5 @@ Finally, you can use the Swagger UI provided by the services to create customers
 
 The script `./show-urls.sh` will display the URLs.
 
-## Deploying using Docker Stack/Swarm
-
-You can also deploy the application using Docker Stack/Swarm mode.
-
-```
-./gradlew assemble
-docker-compose -f docker-compose-eventuate-local.yml build
-docker stack deploy -c docker-stack-eventuate-local-<db-type>.yml customers-and-orders
-```
+# Developing and extending project
+Please refer [Recored Video](https://drive.google.com/file/d/1rptG_rqq0Y_0S-hxG-a3RTxbYDFFRzpa/view?usp=sharing) for further suggestions.
