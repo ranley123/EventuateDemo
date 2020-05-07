@@ -6,6 +6,7 @@ import io.eventuate.EventHandlerContext;
 import io.eventuate.EventHandlerMethod;
 import io.eventuate.EventSubscriber;
 import net.chrisrichardson.eventstore.examples.customersandorders.common.customer.CustomerCreditLimitExceededEvent;
+import net.chrisrichardson.eventstore.examples.customersandorders.common.customer.CustomerCreditRefundedEvent;
 import net.chrisrichardson.eventstore.examples.customersandorders.common.customer.CustomerCreditReservedEvent;
 
 import java.util.concurrent.CompletableFuture;
@@ -20,6 +21,14 @@ public class OrderWorkflow {
 
     return ctx.update(Order.class, orderId, new ApproveOrderCommand());
   }
+
+//  @EventHandlerMethod
+//  public CompletableFuture<EntityWithIdAndVersion<Order>>
+//        creditLimitRefunded(EventHandlerContext<CustomerCreditRefundedEvent> ctx){
+//    String orderId = ctx.getEvent().getOrderId();
+//
+//    return ctx.update(Order.class, orderId, new RefundOrderStateCommand());
+//  }
 
   @EventHandlerMethod
   public CompletableFuture<EntityWithIdAndVersion<Order>>

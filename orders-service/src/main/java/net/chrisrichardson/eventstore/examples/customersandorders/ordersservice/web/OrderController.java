@@ -3,6 +3,8 @@ package net.chrisrichardson.eventstore.examples.customersandorders.ordersservice
 import io.eventuate.EntityWithIdAndVersion;
 import net.chrisrichardson.eventstore.examples.customersandorders.orderscommmon.CreateOrderRequest;
 import net.chrisrichardson.eventstore.examples.customersandorders.orderscommmon.CreateOrderResponse;
+import net.chrisrichardson.eventstore.examples.customersandorders.orderscommmon.RefundOrderRequest;
+import net.chrisrichardson.eventstore.examples.customersandorders.orderscommmon.RefundOrderResponse;
 import net.chrisrichardson.eventstore.examples.customersandorders.ordersservice.backend.CustomerNotFoundException;
 import net.chrisrichardson.eventstore.examples.customersandorders.ordersservice.backend.Order;
 import net.chrisrichardson.eventstore.examples.customersandorders.ordersservice.backend.OrderService;
@@ -30,6 +32,17 @@ public class OrderController {
             EntityWithIdAndVersion<Order> order =
                     orderService.createOrder(createOrderRequest.getCustomerId(), createOrderRequest.getOrderTotal());
             return new ResponseEntity<>(new CreateOrderResponse(order.getEntityId()), HttpStatus.OK);
+        } catch (CustomerNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @RequestMapping(value = "/orders", method = RequestMethod.PUT)
+    public ResponseEntity<RefundOrderResponse> refundOrder(@RequestBody RefundOrderRequest refundOrderRequest){
+        try {
+            EntityWithIdAndVersion<Order> order =
+                    orderService.refundOrder(refundOrderRequest.getCustomerId(), refundOrderRequest.getOrderTotal());
+            return new ResponseEntity<>(new RefundOrderResponse(order.getEntityId()), HttpStatus.OK);
         } catch (CustomerNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

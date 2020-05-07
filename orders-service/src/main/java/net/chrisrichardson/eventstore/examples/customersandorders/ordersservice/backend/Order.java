@@ -3,10 +3,7 @@ package net.chrisrichardson.eventstore.examples.customersandorders.ordersservice
 import io.eventuate.Event;
 import io.eventuate.EventUtil;
 import io.eventuate.ReflectiveMutableCommandProcessingAggregate;
-import net.chrisrichardson.eventstore.examples.customersandorders.common.order.OrderApprovedEvent;
-import net.chrisrichardson.eventstore.examples.customersandorders.common.order.OrderCreatedEvent;
-import net.chrisrichardson.eventstore.examples.customersandorders.common.order.OrderRejectedEvent;
-import net.chrisrichardson.eventstore.examples.customersandorders.common.order.OrderState;
+import net.chrisrichardson.eventstore.examples.customersandorders.common.order.*;
 
 import java.util.List;
 
@@ -27,6 +24,14 @@ public class Order
     this.customerId = event.getCustomerId();
   }
 
+  public List<Event> process(RefundOrderCommand cmd){
+    return events(new OrderRefundedEvent(cmd.getCustomerId(), cmd.getOrderTotal()));
+  }
+
+  public void apply(OrderRefundedEvent event){
+    this.state = OrderState.REFUNDED;
+  }
+
   public OrderState getState() {
     return state;
   }
@@ -39,6 +44,9 @@ public class Order
     return events(new OrderRejectedEvent(customerId));
   }
 
+//  public List<Event> process(RefundOrderStateCommand cmd) {
+//    return events(new OrderRefundedStateEvent(customerId));
+//  }
 
   public void apply(OrderApprovedEvent event) {
     this.state = OrderState.APPROVED;
@@ -48,6 +56,9 @@ public class Order
   public void apply(OrderRejectedEvent event) {
     this.state = OrderState.REJECTED;
   }
+//  public void apply(OrderRefundedStateEvent event) {
+//    this.state = OrderState.REJECTED;
+//  }
 
 
 }

@@ -3,10 +3,7 @@ package net.chrisrichardson.eventstore.examples.customersandorders.customersserv
 import io.eventuate.Event;
 import io.eventuate.EventUtil;
 import io.eventuate.ReflectiveMutableCommandProcessingAggregate;
-import net.chrisrichardson.eventstore.examples.customersandorders.common.customer.CustomerCreatedEvent;
-import net.chrisrichardson.eventstore.examples.customersandorders.common.customer.CustomerCreditLimitExceededEvent;
-import net.chrisrichardson.eventstore.examples.customersandorders.common.customer.CustomerCreditReservedEvent;
-import net.chrisrichardson.eventstore.examples.customersandorders.common.customer.CustomerUpdatedEvent;
+import net.chrisrichardson.eventstore.examples.customersandorders.common.customer.*;
 import net.chrisrichardson.eventstore.examples.customersandorders.common.domain.Money;
 
 import java.util.Collections;
@@ -21,8 +18,10 @@ public class Customer extends ReflectiveMutableCommandProcessingAggregate<Custom
   private boolean deleted = false;
 
   public Money availableCredit() {
-    return creditLimit.subtract(reservedCreditTracker.reservedCredit());
+    Money availableCredit = creditLimit.add(reservedCreditTracker.refundedCredit());
+    return availableCredit.subtract(reservedCreditTracker.reservedCredit());
   }
+
 
   public Money getCreditLimit() {
     return creditLimit;
@@ -37,6 +36,10 @@ public class Customer extends ReflectiveMutableCommandProcessingAggregate<Custom
       return EventUtil.events(new CustomerCreditReservedEvent(cmd.getOrderId(), cmd.getOrderTotal()));
     else
       return EventUtil.events(new CustomerCreditLimitExceededEvent(cmd.getOrderId()));
+  }
+
+  public List<Event> process(RefundCreditCommand cmd){
+    return EventUtil.events(new CustomerCreditRefundedEvent(cmd.getOrderId(), cmd.getOrderTotal()));
   }
 
   public List<Event> process(UpdateCustomerCommand cmd){
@@ -55,6 +58,10 @@ public class Customer extends ReflectiveMutableCommandProcessingAggregate<Custom
 
   public void apply(CustomerCreditReservedEvent event) {
     reservedCreditTracker.addReservation(event.getOrderId(), event.getOrderTotal());
+  }
+
+  public void apply(CustomerCreditRefundedEvent event){
+    reservedCreditTracker.removeReservation(event.getOrderId(), event.getOrderTotal());
   }
 
   public void apply(CustomerCreditLimitExceededEvent event) {
