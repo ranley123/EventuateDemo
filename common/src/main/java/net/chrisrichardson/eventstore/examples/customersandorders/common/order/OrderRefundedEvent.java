@@ -7,6 +7,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 public class OrderRefundedEvent implements OrderEvent{
     private Money orderTotal;
     private String customerId;
+    private String orderId;
 
     @Override
     public boolean equals(Object obj) {
@@ -21,8 +22,9 @@ public class OrderRefundedEvent implements OrderEvent{
     public OrderRefundedEvent() {
     }
 
-    public OrderRefundedEvent(String customerId, Money orderTotal) {
+    public OrderRefundedEvent(String customerId, String orderId, Money orderTotal) {
         this.customerId = customerId;
+        this.orderId = orderId;
         this.orderTotal = orderTotal;
     }
 
@@ -32,5 +34,9 @@ public class OrderRefundedEvent implements OrderEvent{
 
     public String getCustomerId() {
         return customerId;
+    }
+
+    public String getOrderId(){
+        return orderId;
     }
 }

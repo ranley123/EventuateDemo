@@ -41,7 +41,7 @@ public class OrderController {
     public ResponseEntity<RefundOrderResponse> refundOrder(@RequestBody RefundOrderRequest refundOrderRequest){
         try {
             EntityWithIdAndVersion<Order> order =
-                    orderService.refundOrder(refundOrderRequest.getCustomerId(), refundOrderRequest.getOrderTotal());
+                    orderService.refundOrder(refundOrderRequest.getCustomerId(), refundOrderRequest.getOrderId(), refundOrderRequest.getOrderTotal());
             return new ResponseEntity<>(new RefundOrderResponse(order.getEntityId()), HttpStatus.OK);
         } catch (CustomerNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

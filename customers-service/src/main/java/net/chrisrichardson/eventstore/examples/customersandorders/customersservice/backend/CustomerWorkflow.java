@@ -30,7 +30,7 @@ public class CustomerWorkflow {
     OrderRefundedEvent event = ctx.getEvent();
     Money orderTotal = event.getOrderTotal();
     String customerId = event.getCustomerId();
-    String orderId = ctx.getEntityId();
+    String orderId = event.getOrderId();
 
     return ctx.update(Customer.class, customerId, new RefundCreditCommand(orderTotal, orderId));
   }

@@ -18,8 +18,9 @@ public class Customer extends ReflectiveMutableCommandProcessingAggregate<Custom
   private boolean deleted = false;
 
   public Money availableCredit() {
-    Money availableCredit = creditLimit.add(reservedCreditTracker.refundedCredit());
-    return availableCredit.subtract(reservedCreditTracker.reservedCredit());
+//    Money availableCredit = creditLimit.add(reservedCreditTracker.refundedCredit());
+//    return availableCredit.subtract(reservedCreditTracker.reservedCredit());
+    return creditLimit.subtract(reservedCreditTracker.reservedCredit());
   }
 
 

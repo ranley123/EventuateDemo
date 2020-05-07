@@ -7,5 +7,5 @@ public interface OrderService {
 
     EntityWithIdAndVersion<Order> createOrder(String customerId, Money orderTotal);
 
-    EntityWithIdAndVersion<Order> refundOrder(String customerId, Money orderTotal);
+    EntityWithIdAndVersion<Order> refundOrder(String customerId, String orderId, Money orderTotal);
 }

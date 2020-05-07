@@ -25,7 +25,7 @@ public class Order
   }
 
   public List<Event> process(RefundOrderCommand cmd){
-    return events(new OrderRefundedEvent(cmd.getCustomerId(), cmd.getOrderTotal()));
+    return events(new OrderRefundedEvent(cmd.getCustomerId(), cmd.getOrderId(), cmd.getOrderTotal()));
   }
 
   public void apply(OrderRefundedEvent event){

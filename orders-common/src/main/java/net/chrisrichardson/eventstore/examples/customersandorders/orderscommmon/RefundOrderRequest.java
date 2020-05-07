@@ -5,12 +5,14 @@ import net.chrisrichardson.eventstore.examples.customersandorders.common.domain.
 public class RefundOrderRequest {
     private Money orderTotal;
     private String customerId;
+    private String orderId;
 
     public RefundOrderRequest() {
     }
 
-    public RefundOrderRequest(String customerId, Money orderTotal) {
+    public RefundOrderRequest(String customerId, String orderId, Money orderTotal) {
         this.customerId = customerId;
+        this.orderId = orderId;
         this.orderTotal = orderTotal;
     }
 
@@ -20,5 +22,9 @@ public class RefundOrderRequest {
 
     public String getCustomerId() {
         return customerId;
+    }
+
+    public String getOrderId(){
+        return orderId;
     }
 }
