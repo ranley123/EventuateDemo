@@ -18,15 +18,15 @@ to stop all running containers and remove them.
 First, build the application:
 
 ```
-./gradlew assemble
+./gradlew assemble -P eventuateDriver=local
 ```
 
 Next, you can launch the application using [Docker Compose](https://docs.docker.com/compose/)
 
 ```
 export DOCKER_HOST_IP=...
-./gradlew <database-mode>ComposeBuild
-./gradlew <database-mode>ComposeUp
+./gradlew mysqlbinlogComposeBuild
+./gradlew mysqlbinlogComposeUp
 ```
 
 Where `database-mode` is one of:
