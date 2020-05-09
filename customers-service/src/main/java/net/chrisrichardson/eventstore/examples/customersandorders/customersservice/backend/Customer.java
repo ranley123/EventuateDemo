@@ -18,8 +18,6 @@ public class Customer extends ReflectiveMutableCommandProcessingAggregate<Custom
   private boolean deleted = false;
 
   public Money availableCredit() {
-//    Money availableCredit = creditLimit.add(reservedCreditTracker.refundedCredit());
-//    return availableCredit.subtract(reservedCreditTracker.reservedCredit());
     return creditLimit.subtract(reservedCreditTracker.reservedCredit());
   }
 
@@ -50,6 +48,13 @@ public class Customer extends ReflectiveMutableCommandProcessingAggregate<Custom
     return EventUtil.events(new CustomerUpdatedEvent(cmd.getName(), cmd.getCreditLimit()));
   }
 
+  public List<Event> process(DeleteCustomerCommand cmd){
+    if(this.deleted)
+      return Collections.emptyList();
+
+    return EventUtil.events(new CustomerDeletedEvent());
+  }
+
 
   public void apply(CustomerCreatedEvent event) {
     this.name = name;
@@ -70,6 +75,12 @@ public class Customer extends ReflectiveMutableCommandProcessingAggregate<Custom
   }
 
   public void apply(CustomerUpdatedEvent event){
+    this.name = event.getName();
+    this.creditLimit = event.getCreditLimit();
+  }
+
+  public void apply(CustomerDeletedEvent event){
+    this.deleted = true;
     this.name = event.getName();
     this.creditLimit = event.getCreditLimit();
   }

@@ -44,9 +44,6 @@ public class Order
     return events(new OrderRejectedEvent(customerId));
   }
 
-//  public List<Event> process(RefundOrderStateCommand cmd) {
-//    return events(new OrderRefundedStateEvent(customerId));
-//  }
 
   public void apply(OrderApprovedEvent event) {
     this.state = OrderState.APPROVED;
@@ -56,9 +53,6 @@ public class Order
   public void apply(OrderRejectedEvent event) {
     this.state = OrderState.REJECTED;
   }
-//  public void apply(OrderRefundedStateEvent event) {
-//    this.state = OrderState.REJECTED;
-//  }
 
 
 }

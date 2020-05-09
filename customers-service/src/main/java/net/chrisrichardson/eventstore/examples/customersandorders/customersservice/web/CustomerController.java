@@ -43,6 +43,18 @@ public class CustomerController {
 
   }
 
+  @RequestMapping(value = "customers/{customerId}", method = RequestMethod.DELETE)
+  public ResponseEntity<DeleteCustomerResponse> deleteCustomer(@PathVariable String customerId){
+    EntityWithIdAndVersion<Customer> ewidv;
+    try {
+      ewidv = customerService.deleteCustomer(customerId);
+    } catch (EntityNotFoundException e) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+    DeleteCustomerResponse response = new DeleteCustomerResponse(ewidv.getEntityId());
+    return new ResponseEntity<>(response, HttpStatus.OK);
+}
+
   @RequestMapping(value = "/customers/{customerId}", method = RequestMethod.GET)
   public ResponseEntity<GetCustomerResponse> GetCustomer(@PathVariable String customerId) {
     EntityWithMetadata<Customer> customerWithMetadata;

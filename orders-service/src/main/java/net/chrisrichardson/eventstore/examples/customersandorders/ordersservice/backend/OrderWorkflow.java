@@ -22,14 +22,6 @@ public class OrderWorkflow {
     return ctx.update(Order.class, orderId, new ApproveOrderCommand());
   }
 
-//  @EventHandlerMethod
-//  public CompletableFuture<EntityWithIdAndVersion<Order>>
-//        creditLimitRefunded(EventHandlerContext<CustomerCreditRefundedEvent> ctx){
-//    String orderId = ctx.getEvent().getOrderId();
-//
-//    return ctx.update(Order.class, orderId, new RefundOrderStateCommand());
-//  }
-
   @EventHandlerMethod
   public CompletableFuture<EntityWithIdAndVersion<Order>>
         creditLimitExceeded(EventHandlerContext<CustomerCreditLimitExceededEvent> ctx) {
