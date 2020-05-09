@@ -24,6 +24,11 @@ public class CustomerServiceImpl implements CustomerService {
   }
 
   @Override
+  public EntityWithIdAndVersion<Customer> deleteCustomer(String customerId) {
+    return customerRepository.update(customerId, new DeleteCustomerCommand());
+  }
+
+  @Override
   public EntityWithMetadata<Customer> findById(String customerId) {
     return customerRepository.find(customerId);
   }

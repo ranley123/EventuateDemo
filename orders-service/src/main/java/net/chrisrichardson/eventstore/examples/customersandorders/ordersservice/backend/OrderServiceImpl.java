@@ -20,4 +20,11 @@ public class OrderServiceImpl implements OrderService {
     customerService.verifyCustomerCustomerId(customerId);
     return orderRepository.save(new CreateOrderCommand(customerId, orderTotal));
   }
+
+  @Override
+  public EntityWithIdAndVersion<Order>
+      refundOrder(String customerId, String orderId, Money orderTotal){
+    customerService.verifyCustomerCustomerId(customerId);
+    return orderRepository.save(new RefundOrderCommand(customerId, orderId, orderTotal));
+  }
 }

@@ -3,10 +3,7 @@ package net.chrisrichardson.eventstore.examples.customersandorders.ordersservice
 import io.eventuate.Event;
 import io.eventuate.EventUtil;
 import io.eventuate.ReflectiveMutableCommandProcessingAggregate;
-import net.chrisrichardson.eventstore.examples.customersandorders.common.order.OrderApprovedEvent;
-import net.chrisrichardson.eventstore.examples.customersandorders.common.order.OrderCreatedEvent;
-import net.chrisrichardson.eventstore.examples.customersandorders.common.order.OrderRejectedEvent;
-import net.chrisrichardson.eventstore.examples.customersandorders.common.order.OrderState;
+import net.chrisrichardson.eventstore.examples.customersandorders.common.order.*;
 
 import java.util.List;
 
@@ -25,6 +22,14 @@ public class Order
   public void apply(OrderCreatedEvent event) {
     this.state = OrderState.CREATED;
     this.customerId = event.getCustomerId();
+  }
+
+  public List<Event> process(RefundOrderCommand cmd){
+    return events(new OrderRefundedEvent(cmd.getCustomerId(), cmd.getOrderId(), cmd.getOrderTotal()));
+  }
+
+  public void apply(OrderRefundedEvent event){
+    this.state = OrderState.REFUNDED;
   }
 
   public OrderState getState() {

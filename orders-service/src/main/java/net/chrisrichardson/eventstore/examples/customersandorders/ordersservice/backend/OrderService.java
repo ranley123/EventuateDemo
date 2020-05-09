@@ -6,4 +6,6 @@ import net.chrisrichardson.eventstore.examples.customersandorders.common.domain.
 public interface OrderService {
 
     EntityWithIdAndVersion<Order> createOrder(String customerId, Money orderTotal);
+
+    EntityWithIdAndVersion<Order> refundOrder(String customerId, String orderId, Money orderTotal);
 }

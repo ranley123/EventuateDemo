@@ -6,6 +6,7 @@ import io.eventuate.EventHandlerContext;
 import io.eventuate.EventHandlerMethod;
 import io.eventuate.EventSubscriber;
 import net.chrisrichardson.eventstore.examples.customersandorders.common.customer.CustomerCreditLimitExceededEvent;
+import net.chrisrichardson.eventstore.examples.customersandorders.common.customer.CustomerCreditRefundedEvent;
 import net.chrisrichardson.eventstore.examples.customersandorders.common.customer.CustomerCreditReservedEvent;
 
 import java.util.concurrent.CompletableFuture;

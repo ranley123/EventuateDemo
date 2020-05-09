@@ -10,5 +10,7 @@ public interface CustomerService {
 
   EntityWithIdAndVersion<Customer> updateCustomer(String customerId, String name, Money creditLimit);
 
+  EntityWithIdAndVersion<Customer> deleteCustomer(String customerId);
+
   EntityWithMetadata<Customer> findById(String customerId);
 }
