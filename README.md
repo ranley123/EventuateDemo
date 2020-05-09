@@ -52,4 +52,7 @@ Finally, you can use the Swagger UI provided by the services to create customers
 The script `./show-urls.sh` will display the URLs.
 
 # Developing and extending project
-Please refer [Recored Video](https://drive.google.com/file/d/1rptG_rqq0Y_0S-hxG-a3RTxbYDFFRzpa/view?usp=sharing) for further suggestions.
+The extended extra function:
+1. Update Customer
+2. Delete Customer
+3. Refund Order
