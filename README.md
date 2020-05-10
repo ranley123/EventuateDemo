@@ -15,6 +15,18 @@ docker rm $(docker ps -a -q)
 to stop all running containers and remove them.
 
 Operating System: Linux Ubuntu 18.04 LTS
+
+# Developing and extending project
+The extended extra function:
+1. Update Customer
+2. Delete Customer
+3. Refund Order
+4. Get Order
+5. Delete Order in History
+
+# Problems Encountered
+The Eventuate application requires a set of complicated configuration and a high-standard running environment. Since we are at home and we are unable to use lab machines (so Linux system is not guaranteed), many of us did not have a proper running environment configured after a long-time research. Therefore, a heavy workload is required if we want to build a brand-new application. To show our understanding of Eventuate, we can only extend the original application.
+
 # Building and running using Eventuate Local
 First, build the application:
 
@@ -52,13 +64,4 @@ Finally, you can use the Swagger UI provided by the services to create customers
 
 The script `./show-urls.sh` will display the URLs.
 
-# Developing and extending project
-The extended extra function:
-1. Update Customer
-2. Delete Customer
-3. Refund Order
-4. Get Order
-5. Delete Order in History
 
-# Problems Encountered
-The Eventuate application requires a set of complicated configuration and a high-standard running environment. Since we are at home and we are unable to use lab machines (so Linux system is not guaranteed), many of us did not have a proper running environment configured after a long-time research. Therefore, a heavy workload is required if we want to build a brand-new application. To show our understanding of Eventuate, we can only extend the original application.
