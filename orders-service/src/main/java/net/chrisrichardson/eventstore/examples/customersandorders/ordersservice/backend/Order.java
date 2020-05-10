@@ -2,9 +2,11 @@ package net.chrisrichardson.eventstore.examples.customersandorders.ordersservice
 
 import io.eventuate.Event;
 import io.eventuate.EventUtil;
+import net.chrisrichardson.eventstore.examples.customersandorders.common.domain.Money;
 import io.eventuate.ReflectiveMutableCommandProcessingAggregate;
 import net.chrisrichardson.eventstore.examples.customersandorders.common.order.*;
 
+import java.util.Collections;
 import java.util.List;
 
 import static io.eventuate.EventUtil.events;
@@ -14,6 +16,16 @@ public class Order
 
   private OrderState state;
   private String customerId;
+  private Money cost;
+  private Boolean deleted = false;
+
+  public Money getCost() {
+    return cost;
+  }
+
+  public String getCustomerId() {
+    return customerId;
+  }
 
   public List<Event> process(CreateOrderCommand cmd) {
     return events(new OrderCreatedEvent(cmd.getCustomerId(), cmd.getOrderTotal()));
@@ -22,6 +34,19 @@ public class Order
   public void apply(OrderCreatedEvent event) {
     this.state = OrderState.CREATED;
     this.customerId = event.getCustomerId();
+    this.cost = event.getOrderTotal();
+  }
+
+  public List<Event> process(DeleteOrderCommand cmd){
+    if(this.deleted)
+      return Collections.emptyList();
+
+    return EventUtil.events(new OrderDeletedEvent());
+  }
+
+  public void apply(OrderDeletedEvent event){
+    this.deleted = true;
+    this.cost = event.getOrderCost();
   }
 
   public List<Event> process(RefundOrderCommand cmd){
@@ -53,6 +78,5 @@ public class Order
   public void apply(OrderRejectedEvent event) {
     this.state = OrderState.REJECTED;
   }
-
 
 }

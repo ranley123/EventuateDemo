@@ -1,6 +1,7 @@
 package net.chrisrichardson.eventstore.examples.customersandorders.ordersservice.backend;
 
 import io.eventuate.sync.AggregateRepository;
+import io.eventuate.EntityWithMetadata;
 import io.eventuate.EntityWithIdAndVersion;
 import net.chrisrichardson.eventstore.examples.customersandorders.common.domain.Money;
 
@@ -26,5 +27,15 @@ public class OrderServiceImpl implements OrderService {
       refundOrder(String customerId, String orderId, Money orderTotal){
     customerService.verifyCustomerCustomerId(customerId);
     return orderRepository.save(new RefundOrderCommand(customerId, orderId, orderTotal));
+  }
+
+  @Override
+  public EntityWithMetadata<Order> findById(String orderId) {
+    return orderRepository.find(orderId);
+  }
+
+  @Override
+  public EntityWithIdAndVersion<Order> deleteOrder(String orderId) {
+    return orderRepository.update(orderId, new DeleteOrderCommand());
   }
 }
