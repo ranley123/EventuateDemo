@@ -1,0 +1,12 @@
+{
+  "id" : "2136a63d-0a65-4995-859a-ada74fd81999",
+  "request" : {
+    "url" : "/customers/1223232-none",
+    "method" : "GET"
+  },
+  "response" : {
+    "status" : 404,
+    "transformers" : [ "response-template" ]
+  },
+  "uuid" : "2136a63d-0a65-4995-859a-ada74fd81999"
+}

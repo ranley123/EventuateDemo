@@ -1,0 +1,16 @@
+{
+  "id" : "695b26b3-00ca-420d-a8f4-d99ca85488f0",
+  "request" : {
+    "url" : "/customers/1223232",
+    "method" : "GET"
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "{}",
+    "headers" : {
+      "Content-Type" : "application/json;charset=UTF-8"
+    },
+    "transformers" : [ "response-template" ]
+  },
+  "uuid" : "695b26b3-00ca-420d-a8f4-d99ca85488f0"
+}
