@@ -13,7 +13,7 @@ docker stop $(docker ps -a -q)
 docker rm $(docker ps -a -q)
 ```
 to stop all running containers and remove them.
-
+Operating System: Linux Ubuntu 18.04 LTS
 # Building and running using Eventuate Local
 First, build the application:
 
